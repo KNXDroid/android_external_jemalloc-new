@@ -53,7 +53,7 @@ struct mallinfo je_mallinfo() {
   memset(&mi, 0, sizeof(mi));
 
   malloc_mutex_lock(TSDN_NULL, &arenas_lock);
-  for (unsigned i = 0; i < narenas_auto; i++) {
+  for (unsigned i = 0; i < narenas_total_get(); i++) {
     arena_t* arena = atomic_load_p(&arenas[i], ATOMIC_ACQUIRE);
     if (arena != NULL) {
       mi.hblkhd += atomic_load_zu(&arena->stats.mapped, ATOMIC_ACQUIRE);
