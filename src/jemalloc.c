@@ -2754,6 +2754,7 @@ je_rallocx(void *ptr, size_t size, int flags) {
 	LOG("core.rallocx.exit", "result: %p", p);
 	return p;
 label_oom:
+	set_errno(ENOMEM);
 	if (config_xmalloc && unlikely(opt_xmalloc)) {
 		malloc_write("<jemalloc>: Error in rallocx(): out of memory\n");
 		abort();
