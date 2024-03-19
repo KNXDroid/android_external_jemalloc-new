@@ -49,8 +49,7 @@ static size_t accumulate_small_allocs(arena_t* arena) {
  * without taking the stats lock.
  */
 struct mallinfo je_mallinfo() {
-  struct mallinfo mi;
-  memset(&mi, 0, sizeof(mi));
+  struct mallinfo mi = { 0 };
 
   malloc_mutex_lock(TSDN_NULL, &arenas_lock);
   for (unsigned i = 0; i < narenas_total_get(); i++) {
@@ -77,8 +76,7 @@ size_t je_mallinfo_nbins() {
 }
 
 struct mallinfo je_mallinfo_arena_info(size_t aidx) {
-  struct mallinfo mi;
-  memset(&mi, 0, sizeof(mi));
+  struct mallinfo mi = { 0 };
 
   malloc_mutex_lock(TSDN_NULL, &arenas_lock);
   if (aidx < narenas_auto) {
@@ -94,8 +92,7 @@ struct mallinfo je_mallinfo_arena_info(size_t aidx) {
 }
 
 struct mallinfo je_mallinfo_bin_info(size_t aidx, size_t bidx) {
-  struct mallinfo mi;
-  memset(&mi, 0, sizeof(mi));
+  struct mallinfo mi = { 0 };
 
   malloc_mutex_lock(TSDN_NULL, &arenas_lock);
   if (aidx < narenas_auto && bidx < NBINS) {
